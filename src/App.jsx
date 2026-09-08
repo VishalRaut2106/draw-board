@@ -70,7 +70,7 @@ function App() {
             saveToActiveFile: true,
             toggleTheme: true,
             saveAsImage: true,
-            export: true
+            export: { saveFileToDisk: true }
           }
         }}
       />
