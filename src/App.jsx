@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Excalidraw } from '@excalidraw/excalidraw';
+import { Excalidraw, MainMenu } from '@excalidraw/excalidraw';
 import '@excalidraw/excalidraw/index.css';
 
 function App() {
