@@ -5,8 +5,10 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react()],
   define: {
-    'process.env': {},
-    'process.env.NODE_ENV': JSON.stringify('production'),
-    'process.env.IS_PREACT': JSON.stringify('false'),
+    // Replace the entire process.env object so Excalidraw picks the right bundle
+    'process.env': {
+      NODE_ENV: 'production',
+      IS_PREACT: 'false',
+    },
   }
 })
