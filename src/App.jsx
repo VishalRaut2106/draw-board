@@ -105,32 +105,6 @@ function App() {
         GitHub Repo
       </a>
 
-      {/* Slate Branding */}
-      <div
-        style={{
-          position: "absolute",
-          top: "1.5rem",
-          left: "1.5rem",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          zIndex: 10,
-          pointerEvents: "none",
-        }}
-      >
-        <div style={{
-          backgroundColor: "#8b5cf6",
-          color: "white",
-          fontWeight: "bold",
-          padding: "0.4rem 0.8rem",
-          borderRadius: "8px",
-          fontFamily: "system-ui, sans-serif",
-          fontSize: "1.2rem",
-          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-        }}>
-          Slate
-        </div>
-      </div>
     </div>
   );
 }
