@@ -84,7 +84,10 @@ function App() {
           <MainMenu.Separator />
           <MainMenu.Group title="Slate links">
             <MainMenu.ItemLink href="https://github.com/VishalRaut2106/draw-board">
-              Slate
+              GitHub Repo
+            </MainMenu.ItemLink>
+            <MainMenu.ItemLink href="https://github.com/VishalRaut2106">
+              My Profile
             </MainMenu.ItemLink>
           </MainMenu.Group>
           <MainMenu.Separator />
