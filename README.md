@@ -1,4 +1,4 @@
-# Vishal's Whiteboard
+# Slate
 
-Personal whiteboard application hosted on draw.vishalraut.me. Built with React and Excalidraw.
+A clean, personal whiteboard application hosted at draw.vishalraut.me.
 
