@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "oxlint",
-    "preview": "vite preview"
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "postinstall": "node patch-excalidraw.cjs"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.1",
