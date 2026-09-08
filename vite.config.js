@@ -12,10 +12,15 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      // Force the working dev bundle instead of the broken prod bundle
-      '@excalidraw/excalidraw': fileURLToPath(new URL('./node_modules/@excalidraw/excalidraw/dist/dev/index.js', import.meta.url)),
-    },
+    alias: [
+      {
+        // Use regex with $ to match ONLY the exact package import,
+        // not sub-path imports like '@excalidraw/excalidraw/index.css'
+        find: /^@excalidraw\/excalidraw$/,
+        replacement: fileURLToPath(new URL('./node_modules/@excalidraw/excalidraw/dist/dev/index.js', import.meta.url)),
+      },
+    ],
   },
 })
+
 
