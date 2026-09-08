@@ -5,6 +5,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react()],
   define: {
-    'process.env': {}
+    'process.env': {},
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.IS_PREACT': JSON.stringify('false'),
   }
 })
