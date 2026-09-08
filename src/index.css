@@ -1,0 +1,12 @@
+body, html, #root { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; }
+
+.excalidraw a[href*='github.com'],
+.excalidraw a[href*='discord'],
+.excalidraw a[href*='twitter'],
+.excalidraw a[href*='x.com'],
+.excalidraw a[href*='excalidraw.com'],
+.excalidraw .ExcalidrawLogo,
+.excalidraw .welcome-screen-center,
+.excalidraw .welcome-screen-decor {
+  display: none !important;
+}
