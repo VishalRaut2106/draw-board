@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import { fileURLToPath, URL } from 'url'
 
 // ─── Slate Branding Plugin ─────────────────────────────────────────────────
 // Transforms Excalidraw source *during* the Vite build — no postinstall needed,
@@ -25,7 +26,6 @@ function slateBrandingPlugin() {
 
   return {
     name: 'slate-branding',
-    // Runs during both dev-server transforms AND production Rolldown bundling
     transform(code, id) {
       if (!excalidrawRE.test(id)) return null;
 
@@ -52,4 +52,19 @@ export default defineConfig({
       IS_PREACT: 'false',
     },
   },
+  resolve: {
+    alias: [
+      {
+        // Force the WORKING dev bundle — the prod bundle has a class-field
+        // initialization bug that crashes in production Rolldown builds.
+        // Use regex + $ so only the exact import is aliased, not sub-paths
+        // like '@excalidraw/excalidraw/index.css'.
+        find: /^@excalidraw\/excalidraw$/,
+        replacement: fileURLToPath(
+          new URL('./node_modules/@excalidraw/excalidraw/dist/dev/index.js', import.meta.url)
+        ),
+      },
+    ],
+  },
 })
+
