@@ -8,9 +8,11 @@ const filePaths = [
 
 // Safe UI-only string replacements.
 // NEVER replace JS identifiers — only human-visible display text.
+// NOTE: use \b word boundary on .excalidraw so we only match file extensions
+//       like '.excalidraw"' and NOT property accesses like '.excalidrawContainerRef'
 const replacements = [
-    // File extension in save/load dialogs
-    [/\.excalidraw/g, '.slate'],
+    // File extension in save/load dialogs — \b ensures we don't match property names
+    [/\.excalidraw\b/g, '.slate'],
 
     // Known UI label strings (exact, case-sensitive)
     ['Export to Excalidraw',      'Export to Slate'],
