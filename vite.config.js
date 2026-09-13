@@ -9,6 +9,17 @@ function slateBrandingPlugin() {
   const excalidrawRE = /node_modules[/\\]@excalidraw[/\\]/;
 
   const replacements = [
+    // ── DEFENSIVE FIX ─────────────────────────────────────────────────────
+    // Vercel caches node_modules between builds. An old broken postinstall
+    // ran /\.excalidraw/g which accidentally renamed property ACCESSES like
+    // `.excalidrawContainerRef` → `.slateContainerRef` but LEFT the createRef()
+    // declaration as `excalidrawContainerRef` → crash (ref is undefined).
+    // These two lines restore the originals so the build is safe regardless
+    // of whether Vercel's cache is clean or corrupt.
+    [/\bslateContainerRef\b/g,         'excalidrawContainerRef'],
+    [/\bslateContainerValue\b/g,        'excalidrawContainerValue'],
+    // ──────────────────────────────────────────────────────────────────────
+
     // File-extension strings: use \b so we match ".excalidraw" (followed by
     // a non-word char like " or , or )) but NOT ".excalidrawContainerRef" etc.
     [/\.excalidraw\b/g,               '.slate'],
@@ -23,6 +34,7 @@ function slateBrandingPlugin() {
     ['Excalidraw+',                    'Slate+'],
     ['https://excalidraw.com',         'https://draw.vishalraut.me'],
   ];
+
 
   return {
     name: 'slate-branding',
