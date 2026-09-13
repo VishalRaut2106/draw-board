@@ -1,21 +1,46 @@
 const fs = require('fs');
 const path = require('path');
+
 const filePaths = [
     path.join(__dirname, 'node_modules', '@excalidraw', 'excalidraw', 'dist', 'prod', 'index.js'),
-    path.join(__dirname, 'node_modules', '@excalidraw', 'excalidraw', 'dist', 'dev', 'index.js')
+    path.join(__dirname, 'node_modules', '@excalidraw', 'excalidraw', 'dist', 'dev', 'index.js'),
+];
+
+// Safe UI-only string replacements.
+// NEVER replace JS identifiers — only human-visible display text.
+const replacements = [
+    // File extension in save/load dialogs
+    [/\.excalidraw/g, '.slate'],
+
+    // Known UI label strings (exact, case-sensitive)
+    ['Export to Excalidraw',      'Export to Slate'],
+    ['Open Excalidraw file',      'Open Slate file'],
+    ['Save as Excalidraw file',   'Save as Slate file'],
+    ['Excalidraw file',           'Slate file'],
+    ['Welcome to Excalidraw',     'Welcome to Slate'],
+    ['Made with Excalidraw',      'Made with Slate'],
+    ['Excalidraw+',               'Slate+'],
+
+    // External URLs in UI text / aria labels (not in code logic)
+    ['https://excalidraw.com',    'https://draw.vishalraut.me'],
 ];
 
 for (const filePath of filePaths) {
-    if (fs.existsSync(filePath)) {
-        let content = fs.readFileSync(filePath, 'utf8');
-        // Safely replace the file extension only
-        content = content.replace(/\.excalidraw/g, '.slate');
-        
-        // Safely replace specific UI strings only (avoid breaking internal React states)
-        content = content.replace(/Export to Excalidraw/g, 'Export to Slate');
-        content = content.replace(/Open Excalidraw file/g, 'Open Slate file');
-        
-        fs.writeFileSync(filePath, content, 'utf8');
-        console.log('Patched ' + filePath);
+    if (!fs.existsSync(filePath)) {
+        console.warn('Not found, skipping:', filePath);
+        continue;
     }
+
+    let content = fs.readFileSync(filePath, 'utf8');
+
+    for (const [from, to] of replacements) {
+        content = content.replace(from instanceof RegExp ? from : new RegExp(escapeRegex(from), 'g'), to);
+    }
+
+    fs.writeFileSync(filePath, content, 'utf8');
+    console.log('Patched:', path.basename(path.dirname(filePath)) + '/' + path.basename(filePath));
+}
+
+function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
