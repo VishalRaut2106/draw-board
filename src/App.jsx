@@ -37,8 +37,8 @@ function App() {
           data = {
             elements: parsed.elements,
             appState: {
-              viewBackgroundColor: '#121212',
-              theme: 'dark',
+              viewBackgroundColor: parsed.appState?.viewBackgroundColor || '#121212',
+              theme: parsed.appState?.theme || 'dark',
             },
           };
         }

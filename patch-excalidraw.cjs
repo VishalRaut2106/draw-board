@@ -11,8 +11,9 @@ const filePaths = [
 // NOTE: use \b word boundary on .excalidraw so we only match file extensions
 //       like '.excalidraw"' and NOT property accesses like '.excalidrawContainerRef'
 const replacements = [
-    // File extension in save/load dialogs — \b ensures we don't match property names
-    [/\.excalidraw\b/g, '.slate'],
+    // File extension in save/load dialogs — negative lookahead to prevent matching CSS classes
+    // Ensures we only match '.excalidraw' when it's at the end of a string or followed by a quote.
+    [/\.excalidraw(?=['"`])/g, '.slate'],
 
     // Known UI label strings (exact, case-sensitive)
     ['Export to Excalidraw',      'Export to Slate'],
