@@ -20,9 +20,11 @@ function slateBrandingPlugin() {
     [/\bslateContainerValue\b/g,        'excalidrawContainerValue'],
     // ──────────────────────────────────────────────────────────────────────
 
-    // File-extension strings: use \b so we match ".excalidraw" (followed by
-    // a non-word char like " or , or )) but NOT ".excalidrawContainerRef" etc.
-    [/\.excalidraw\b/g,               '.slate'],
+    // File-extension strings: negative lookahead (?![.\w]) ensures we match
+    // ".excalidraw" only when it's a file extension (followed by " , ) etc.)
+    // NOT when it's mid-domain like "libraries.excalidraw.com".
+    // This also prevents matching ".excalidrawContainerRef" (word char after).
+    [/\.excalidraw(?![.\w])/g,        '.slate'],
 
     // Specific visible UI label strings (exact, case-sensitive)
     ['Export to Excalidraw',           'Export to Slate'],
@@ -33,6 +35,9 @@ function slateBrandingPlugin() {
     ['Made with Excalidraw',           'Made with Slate'],
     ['Excalidraw+',                    'Slate+'],
     ['https://excalidraw.com',         'https://draw.vishalraut.me'],
+    // Keep libraries.excalidraw.com working — redirect to real library
+    // (don't replace the whole excalidraw.com domain broadly)
+
   ];
 
 
