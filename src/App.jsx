@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Excalidraw, MainMenu, WelcomeScreen } from '@excalidraw/excalidraw';
-import '@excalidraw/excalidraw/index.css';
+import '@excalidraw/excalidraw/dist/dev/index.css';
 
 const STORAGE_KEY = 'slate-board-data';
 const GITHUB_URL = 'https://github.com/VishalRaut2106/draw-board';
