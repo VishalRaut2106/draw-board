@@ -21,14 +21,7 @@ const GlobeIcon = () => (
   </svg>
 );
 
-/* ─── hide library sidebar button via CSS injection ─────────────────────── */
-const HIDE_LIBRARY_CSS = `
-  .layer-ui__wrapper .layer-ui__library,
-  button[aria-label="Library"],
-  .ToolIcon[data-testid="toolbar-libraries"] {
-    display: none !important;
-  }
-`;
+
 
 function App() {
   const [initialData, setInitialData] = useState(undefined);
@@ -106,9 +99,6 @@ function App() {
 
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
-      {/* Inject CSS to hide library button */}
-      <style>{HIDE_LIBRARY_CSS}</style>
-
       <Excalidraw
         initialData={initialData}
         onChange={handleChange}
@@ -150,9 +140,6 @@ function App() {
 
         {/* ── Welcome screen: personal Slate branding ── */}
         <WelcomeScreen>
-          <WelcomeScreen.Hints.MenuHint />
-          <WelcomeScreen.Hints.ToolbarHint />
-          <WelcomeScreen.Hints.HelpHint />
           <WelcomeScreen.Center>
             <WelcomeScreen.Center.Logo>
               <span

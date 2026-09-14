@@ -6613,3 +6613,28 @@ body.excalidraw-cursor-resize * {
   left: -5px;
 }
 /*# sourceMappingURL=index.css.map */
+
+/* ─── Slate customizations ──────────────────────────────────────────────── */
+
+/* Hide library button & panel */
+.layer-ui__wrapper .layer-ui__library,
+button[aria-label="Library"],
+.ToolIcon[data-testid="toolbar-libraries"] {
+  display: none !important;
+}
+
+/* Remove docs / blog / youtube links from the Help dialog */
+.HelpDialog__btn[href*="docs."],
+.HelpDialog__btn[href*="plus."],
+.HelpDialog__btn[href*="youtube.com"] {
+  display: none !important;
+}
+
+/* Ensure tooltips always appear on top and never block pointer events on canvas */
+.tooltip {
+  z-index: 99999 !important;
+  pointer-events: none !important;
+}
+.popover {
+  z-index: 99998 !important;
+}
