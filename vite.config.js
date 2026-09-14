@@ -67,10 +67,17 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        // CSS alias — the package exports field doesn't expose dist/dev/index.css
+        // so we bypass it with a direct file path.
+        find: '@excalidraw/excalidraw/index.css',
+        replacement: fileURLToPath(
+          new URL('./node_modules/@excalidraw/excalidraw/dist/dev/index.css', import.meta.url)
+        ),
+      },
+      {
         // Force the WORKING dev bundle — the prod bundle has a class-field
         // initialization bug that crashes in production Rolldown builds.
-        // Use regex + $ so only the exact import is aliased, not sub-paths
-        // like '@excalidraw/excalidraw/index.css'.
+        // Regex with $ so only the exact import is aliased, not sub-paths.
         find: /^@excalidraw\/excalidraw$/,
         replacement: fileURLToPath(
           new URL('./node_modules/@excalidraw/excalidraw/dist/dev/index.js', import.meta.url)
@@ -79,4 +86,3 @@ export default defineConfig({
     ],
   },
 })
-
