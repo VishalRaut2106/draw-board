@@ -6640,7 +6640,8 @@ button[aria-label="Library"],
   z-index: 99998 !important;
 }
 
-/* Ensure Excalidraw tooltips do not intercept pointer events to avoid stickiness */
+/* Hide all Excalidraw tooltips as requested */
 .excalidraw-tooltip {
-  pointer-events: none !important;
+  display: none !important;
 }
+
