@@ -6616,10 +6616,11 @@ body.excalidraw-cursor-resize * {
 
 /* ─── Slate customizations ──────────────────────────────────────────────── */
 
-/* Hide library button & panel */
+/* Hide library button, panel, and sidebar trigger (pin button) */
 .layer-ui__wrapper .layer-ui__library,
 button[aria-label="Library"],
-.ToolIcon[data-testid="toolbar-libraries"] {
+.ToolIcon[data-testid="toolbar-libraries"],
+.sidebar-trigger {
   display: none !important;
 }
 
@@ -6637,4 +6638,9 @@ button[aria-label="Library"],
 }
 .popover {
   z-index: 99998 !important;
+}
+
+/* Ensure Excalidraw tooltips do not intercept pointer events to avoid stickiness */
+.excalidraw-tooltip {
+  pointer-events: none !important;
 }
