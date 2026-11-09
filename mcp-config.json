@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "slate-whiteboard": {
+      "command": "npx",
+      "args": ["-y", "tsx", "src/mcp/index.ts"],
+      "env": {
+        "BRIDGE_PORT": "4444"
+      }
+    },
+    "slate-whiteboard-sse": {
+      "serverUrl": "http://127.0.0.1:4445/sse",
+      "url": "http://127.0.0.1:4445/sse"
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Excalidraw, MainMenu, WelcomeScreen } from '@excalidraw/excalidraw';
+import { Excalidraw, MainMenu, WelcomeScreen, DefaultSidebar } from '@excalidraw/excalidraw';
 import './excalidraw-styles.css';
+import { canvasClient } from './bridge/canvas-client';
+import { BridgeStatus } from './components/BridgeStatus';
+import { getArchitectureLibraryItems } from './libraries/architecture-library';
 
 const STORAGE_KEY = 'slate-board-data';
 const GITHUB_URL = 'https://github.com/VishalRaut2106/draw-board';
@@ -58,6 +61,13 @@ function App() {
     );
   }, []);
 
+  useEffect(() => {
+    canvasClient.connect();
+    return () => {
+      canvasClient.disconnect();
+    };
+  }, []);
+
   const handleChange = useCallback((elements, appState) => {
     if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     saveTimeoutRef.current = setTimeout(() => {
@@ -98,8 +108,20 @@ function App() {
   }
 
   return (
-    <div style={{ height: '100vh', width: '100vw' }}>
+    <div style={{ height: '100vh', width: '100vw', position: 'relative' }}>
       <Excalidraw
+        excalidrawAPI={(api) => {
+          window.__EXCALIDRAW_API__ = api;
+          canvasClient.setExcalidrawAPI(api);
+          try {
+            api.updateLibrary({
+              libraryItems: getArchitectureLibraryItems(),
+              merge: true,
+            });
+          } catch (e) {
+            console.warn('Preloading library items:', e);
+          }
+        }}
         initialData={initialData}
         onChange={handleChange}
         UIOptions={{
@@ -114,6 +136,9 @@ function App() {
           },
         }}
       >
+        {/* ── Excalidraw External Library & Sidebar ── */}
+        <DefaultSidebar />
+
         {/* ── Custom menu: only useful items + personal links ── */}
         <MainMenu>
           <MainMenu.DefaultItems.LoadScene />
@@ -166,6 +191,9 @@ function App() {
           </WelcomeScreen.Center>
         </WelcomeScreen>
       </Excalidraw>
+
+      {/* ── Real-time MCP Bridge status widget ── */}
+      <BridgeStatus />
     </div>
   );
 }

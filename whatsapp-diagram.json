@@ -1,0 +1,343 @@
+{
+  "clear": true,
+  "title": "💬 WhatsApp System Design Architecture",
+  "titleX": 60,
+  "titleY": 30,
+  "titleFontSize": 28,
+  "subtitle": "Real-Time Messaging | E2EE Signal Protocol | Offline Store-and-Forward | Media CDN | Multi-Device",
+  "subtitleX": 60,
+  "subtitleY": 68,
+  "shapes": [
+    {
+      "id": "client_a",
+      "type": "rectangle",
+      "label": "📱 User A (Sender App)\nChat UI • Local SQLite • E2EE",
+      "x": 60,
+      "y": 130,
+      "width": 240,
+      "height": 90,
+      "backgroundColor": "#0f172a",
+      "strokeColor": "#38bdf8",
+      "strokeWidth": 2
+    },
+    {
+      "id": "edge",
+      "type": "rectangle",
+      "label": "🌐 Load Balancer & Edge\nTLS Termination • Anycast L4/L7",
+      "x": 390,
+      "y": 130,
+      "width": 240,
+      "height": 90,
+      "backgroundColor": "#1e1b4b",
+      "strokeColor": "#a78bfa",
+      "strokeWidth": 2
+    },
+    {
+      "id": "ws_gateway",
+      "type": "rectangle",
+      "label": "⚡ WebSocket Gateway Fleet\nPersistent Erlang/WS Sockets (2M+/box)",
+      "x": 730,
+      "y": 130,
+      "width": 260,
+      "height": 90,
+      "backgroundColor": "#1e1b4b",
+      "strokeColor": "#c4b5fd",
+      "strokeWidth": 2
+    },
+    {
+      "id": "presence",
+      "type": "rectangle",
+      "label": "📡 Presence & Session Service\nOnline • Last Seen • Typing Status",
+      "x": 1080,
+      "y": 105,
+      "width": 260,
+      "height": 65,
+      "backgroundColor": "#134e4a",
+      "strokeColor": "#2dd4bf",
+      "strokeWidth": 2
+    },
+    {
+      "id": "redis",
+      "type": "rectangle",
+      "label": "⚡ Redis Session Cluster\nUser ID ➔ Gateway Socket IP Map",
+      "x": 1080,
+      "y": 185,
+      "width": 260,
+      "height": 65,
+      "backgroundColor": "#4c0519",
+      "strokeColor": "#fb7185",
+      "strokeWidth": 2
+    },
+    {
+      "id": "client_b",
+      "type": "rectangle",
+      "label": "📱 User B (Receiver App)\nChat UI • Local SQLite • E2EE",
+      "x": 60,
+      "y": 310,
+      "width": 240,
+      "height": 90,
+      "backgroundColor": "#064e3b",
+      "strokeColor": "#34d399",
+      "strokeWidth": 2
+    },
+    {
+      "id": "api_gateway",
+      "type": "rectangle",
+      "label": "🚪 REST API Gateway\nAuth • Profiles • Group Metadata",
+      "x": 390,
+      "y": 310,
+      "width": 240,
+      "height": 90,
+      "backgroundColor": "#312e81",
+      "strokeColor": "#a78bfa",
+      "strokeWidth": 2
+    },
+    {
+      "id": "message_service",
+      "type": "rectangle",
+      "label": "💬 Message Router & Service\nValidation • Dedup • Routing Engine",
+      "x": 730,
+      "y": 310,
+      "width": 260,
+      "height": 90,
+      "backgroundColor": "#0c4a6e",
+      "strokeColor": "#38bdf8",
+      "strokeWidth": 2
+    },
+    {
+      "id": "key_service",
+      "type": "rectangle",
+      "label": "🔒 E2EE Key Directory\nSignal Prekeys & Device Public Keys",
+      "x": 1080,
+      "y": 310,
+      "width": 260,
+      "height": 90,
+      "backgroundColor": "#422006",
+      "strokeColor": "#fbbf24",
+      "strokeWidth": 2
+    },
+    {
+      "id": "media_service",
+      "type": "rectangle",
+      "label": "🖼️ Media Storage & CDN\nS3 Encrypted Blobs • Edge Cache",
+      "x": 60,
+      "y": 490,
+      "width": 240,
+      "height": 90,
+      "backgroundColor": "#172554",
+      "strokeColor": "#60a5fa",
+      "strokeWidth": 2
+    },
+    {
+      "id": "push_service",
+      "type": "rectangle",
+      "label": "🔔 Push Notifications\nApple APNs & Google FCM Wakeup",
+      "x": 390,
+      "y": 490,
+      "width": 240,
+      "height": 90,
+      "backgroundColor": "#3b0764",
+      "strokeColor": "#c084fc",
+      "strokeWidth": 2
+    },
+    {
+      "id": "event_queue",
+      "type": "rectangle",
+      "label": "📥 Kafka Event Queue\nAsync Message Bus • Retry Pipeline",
+      "x": 730,
+      "y": 490,
+      "width": 260,
+      "height": 90,
+      "backgroundColor": "#431407",
+      "strokeColor": "#fb923c",
+      "strokeWidth": 2
+    },
+    {
+      "id": "message_store",
+      "type": "rectangle",
+      "label": "🗄️ Cassandra NoSQL Store\nOffline Store-and-Forward Buffer",
+      "x": 1080,
+      "y": 490,
+      "width": 260,
+      "height": 90,
+      "backgroundColor": "#451a03",
+      "strokeColor": "#fbbf24",
+      "strokeWidth": 2
+    },
+    {
+      "id": "device_sync",
+      "type": "rectangle",
+      "label": "🔄 Multi-Device Sync\nPer-Device Encryption & Delivery",
+      "x": 390,
+      "y": 660,
+      "width": 240,
+      "height": 80,
+      "backgroundColor": "#312e81",
+      "strokeColor": "#a78bfa",
+      "strokeWidth": 2
+    },
+    {
+      "id": "receipt_service",
+      "type": "rectangle",
+      "label": "✅ Receipt Service\nSent ✓ • Delivered ✓✓ • Read Blue ✓✓",
+      "x": 730,
+      "y": 660,
+      "width": 260,
+      "height": 80,
+      "backgroundColor": "#064e3b",
+      "strokeColor": "#34d399",
+      "strokeWidth": 2
+    },
+    {
+      "id": "observability",
+      "type": "rectangle",
+      "label": "📊 Observability & Reliability\nMetrics • Distributed Traces • Lag Alerts",
+      "x": 1080,
+      "y": 660,
+      "width": 260,
+      "height": 80,
+      "backgroundColor": "#27272a",
+      "strokeColor": "#a1a1aa",
+      "strokeWidth": 2
+    }
+  ],
+  "connectors": [
+    {
+      "sourceId": "client_a",
+      "targetId": "edge",
+      "label": "1. Connect WSS",
+      "strokeColor": "#38bdf8"
+    },
+    {
+      "sourceId": "edge",
+      "targetId": "ws_gateway",
+      "label": "2. Route Connection",
+      "strokeColor": "#a78bfa"
+    },
+    {
+      "sourceId": "ws_gateway",
+      "targetId": "presence",
+      "label": "Socket Lookup",
+      "strokeColor": "#2dd4bf"
+    },
+    {
+      "sourceId": "presence",
+      "targetId": "redis",
+      "label": "Cache Check",
+      "strokeColor": "#fb7185"
+    },
+    {
+      "sourceId": "ws_gateway",
+      "targetId": "message_service",
+      "label": "3. Encrypted Msg",
+      "strokeColor": "#38bdf8"
+    },
+    {
+      "sourceId": "message_service",
+      "targetId": "key_service",
+      "label": "Verify Prekeys",
+      "strokeColor": "#fbbf24"
+    },
+    {
+      "sourceId": "message_service",
+      "targetId": "event_queue",
+      "label": "4. Push to Queue",
+      "strokeColor": "#fb923c"
+    },
+    {
+      "sourceId": "event_queue",
+      "targetId": "message_store",
+      "label": "5. Buffer If Offline",
+      "strokeColor": "#fbbf24"
+    },
+    {
+      "sourceId": "event_queue",
+      "targetId": "push_service",
+      "label": "6. Trigger Offline Push",
+      "strokeColor": "#c084fc"
+    },
+    {
+      "sourceId": "push_service",
+      "targetId": "client_b",
+      "label": "Wakeup Alert",
+      "strokeColor": "#c084fc",
+      "strokeStyle": "dashed"
+    },
+    {
+      "sourceId": "message_service",
+      "targetId": "client_b",
+      "label": "7. Deliver (If Online)",
+      "strokeColor": "#34d399"
+    },
+    {
+      "sourceId": "client_a",
+      "targetId": "media_service",
+      "label": "Upload Media",
+      "strokeColor": "#60a5fa"
+    },
+    {
+      "sourceId": "client_b",
+      "targetId": "media_service",
+      "label": "Download Media",
+      "strokeColor": "#60a5fa",
+      "strokeStyle": "dashed"
+    },
+    {
+      "sourceId": "event_queue",
+      "targetId": "receipt_service",
+      "label": "8. Delivery ACKs",
+      "strokeColor": "#34d399"
+    },
+    {
+      "sourceId": "push_service",
+      "targetId": "device_sync",
+      "label": "Sync Event",
+      "strokeColor": "#a78bfa"
+    },
+    {
+      "sourceId": "message_store",
+      "targetId": "observability",
+      "label": "Store Lag Metrics",
+      "strokeColor": "#a1a1aa",
+      "strokeStyle": "dashed"
+    }
+  ],
+  "stickyNotes": [
+    {
+      "id": "note_e2ee",
+      "type": "rectangle",
+      "label": "🔒 STICKY NOTE: E2EE & Signal Protocol\n• Clients encrypt messages locally before transmission\n• Uses Signal Protocol (Double Ratchet Algorithm)\n• WhatsApp servers only route raw ciphertext bytes\n• Private keys NEVER leave User devices\n• Servers cannot read message content!",
+      "x": 1400,
+      "y": 105,
+      "width": 380,
+      "height": 210,
+      "backgroundColor": "#422006",
+      "strokeColor": "#fde047",
+      "strokeWidth": 2
+    },
+    {
+      "id": "note_delivery",
+      "type": "rectangle",
+      "label": "📦 STICKY NOTE: Store-and-Forward & Receipts\n• If recipient is offline, message buffers in Cassandra\n• Apple APNs / Google FCM sends wakeup notification\n• ✓ (One Check): Message safely reached server\n• ✓✓ (Two Checks): Recipient phone received message\n• Server Deletion: Once delivered, server deletes it!\n• Blue ✓✓: Recipient opened the chat window",
+      "x": 1400,
+      "y": 345,
+      "width": 380,
+      "height": 225,
+      "backgroundColor": "#431407",
+      "strokeColor": "#fb923c",
+      "strokeWidth": 2
+    },
+    {
+      "id": "note_media",
+      "type": "rectangle",
+      "label": "🖼️ STICKY NOTE: Why Media Skips WebSockets\n• 50MB videos would choke real-time chat sockets!\n• 1. Client encrypts media locally with random key\n• 2. Uploads directly to S3 via presigned URL\n• 3. Chat server only transmits 1KB message with\n  thumbnail, download link & decryption key\n• 4. Recipient downloads directly from edge CDN",
+      "x": 1400,
+      "y": 600,
+      "width": 380,
+      "height": 210,
+      "backgroundColor": "#052e16",
+      "strokeColor": "#4ade80",
+      "strokeWidth": 2
+    }
+  ]
+}
